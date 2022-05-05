@@ -1,13 +1,21 @@
 name: Publish
 on: [pull_request]
 jobs:
-  build:
+  generate-link:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout 👀
+        uses: actions/checkout@v3
+        uses: actions/setup-node@v3
         with:
           node-version: "16"
-      - run: npm i
-      - run: npm run build
-      - run: echo 'we did it'
+      
+      - name: Build 🛠
+        run: npm i
+        run: npm run build
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.3.3
+        with:
+          branch: staging # The branch the action should deploy to.
+          folder: build # The folder the action should deploy.
