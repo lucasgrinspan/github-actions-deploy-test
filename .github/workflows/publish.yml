@@ -16,7 +16,7 @@ jobs:
         run: npm i && npm run build
 
       - name: Get PR number
-        run: ::set-output name=num::$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
+        run: echo "::set-output name=num::$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')"
         id: pr-number
 
       - name: Deploy 🚀
