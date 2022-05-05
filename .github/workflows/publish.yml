@@ -23,4 +23,4 @@ jobs:
         with:
           branch: staging # The branch the action should deploy to.
           folder: build # The folder the action should deploy.
-          target-folder: $pr-number
+          target-folder: ${{ env.pr-number }}
