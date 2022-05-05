@@ -24,4 +24,4 @@ jobs:
         with:
           branch: staging # The branch the action should deploy to.
           folder: build # The folder the action should deploy.
-          target-folder: ${{ steps.pr-number.pr-number.num }}
+          target-folder: ${{ steps.pr-number.outputs.num }}
