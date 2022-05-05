@@ -10,4 +10,4 @@ jobs:
           node-version: "16"
       - run: npm i
       - run: npm run build
-      - run: echo 'we did it!!!'
+      - run: echo 'we did it!!!!'
