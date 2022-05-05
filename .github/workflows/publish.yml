@@ -15,8 +15,12 @@ jobs:
       - name: Build 🛠
         run: npm i && npm run build
 
+      - name: Get PR number
+        run: echo "pr-number=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')"
+
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
           branch: staging # The branch the action should deploy to.
           folder: build # The folder the action should deploy.
+          target-folder: $pr-number
