@@ -30,15 +30,15 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
-            console.log(steps.pr-number-outputs.num);
             console.log(context);
             let commentBody = 'PR build failed';
+
             if (process.env.deployment_status === 'success') {
               commentBody = `PR build successfull! https://lucasgrinspan.github.io/github-actions-deploy-test/4`
             }
 
             github.rest.issues.createComment({
-              issue_number: steps.pr-number.outputs.num,
+              issue_number: ${{steps.pr-number.outputs.num}},
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: commentBody,
