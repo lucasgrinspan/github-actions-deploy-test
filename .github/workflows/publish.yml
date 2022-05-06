@@ -4,10 +4,10 @@ jobs:
   generate-link:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 👀
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Node setup 👷
+      - name: Node setup
         uses: actions/setup-node@v3
         with:
           node-version: "16"
@@ -19,9 +19,27 @@ jobs:
         run: echo "::set-output name=num::$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')"
         id: pr-number
 
-      - name: Deploy 🚀
+      - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
           branch: staging # The branch the action should deploy to.
           folder: build # The folder the action should deploy.
           target-folder: ${{ steps.pr-number.outputs.num }}
+
+      - name: Comment
+        uses: actions/github-script@v5
+        with:
+          script: |
+            console.log(steps.pr-number-outputs.num);
+            console.log(context);
+            let commentBody = 'PR build failed';
+            if (process.env.deployment_status === 'success') {
+              commentBody = `PR build successfull! https://lucasgrinspan.github.io/github-actions-deploy-test/4`
+            }
+
+            github.rest.issues.createComment({
+              issue_number: steps.pr-number.outputs.num,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: commentBody,
+            })
