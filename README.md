@@ -1,70 +1,28 @@
-# Getting Started with Create React App
+# GitHub Actions Test
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The purpose of this repository is to test a workflow for generating testing links from the changes in a pull request. This is done using just GitHub Actions and GitHub Pages. This should help with the initial boilerplate of setting up this pipeline.
 
-## Available Scripts
+## Generating a Link
 
-In the project directory, you can run:
+Every time a pull request is opened, the workflow defined in `.github/workflows/publish.yml` runs by subscribing to the `pull_request` event. This event fires not just when a pull request is opened, but also when it is updated. The workflow will checkout the changes, install, and then build the changes. This will generate a static directory for deployment (`build` directory). Using a custom action, the workflow will then copy the generated output to the `staging` branch, placing it in a directory named after the PR number. Elsewhere, GitHub Pages is configured to serve the content on the `staging` branch. The PR number naming scheme allows multiple pull request changes to exist in the `staging` branch.
 
-### `npm start`
+Finally, the workflow leaves a comment on the pull request with the link.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Merging Changes
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+When changes get merged, the workflow defined in `.github/workflows/publish-main.yml` executes. This builds the new content of the `main` branch to the root directory of the `staging` branch. Over time, the file structure will resemble:
 
-### `npm test`
+```
+/ latest changes from main
+  4/ changes from PR #4
+  5/ changes from PR #5
+  6/ changes from PR #6
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This structure is reflected in the GitHub Pages URL.
 
-### `npm run build`
+## Demo
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [Deployed output from main](https://lucasgrinspan.github.io/github-actions-deploy-test/)
+- [Deployed output](https://lucasgrinspan.github.io/github-actions-deploy-test/5/) from [PR#5](https://github.com/lucasgrinspan/github-actions-deploy-test/pull/5)
+- [Deployed output](https://lucasgrinspan.github.io/github-actions-deploy-test/6/) from [PR#6](https://github.com/lucasgrinspan/github-actions-deploy-test/pull/6)
