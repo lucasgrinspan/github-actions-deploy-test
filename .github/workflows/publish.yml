@@ -34,7 +34,7 @@ jobs:
             let commentBody = 'PR build failed';
 
             if (process.env.deployment_status === 'success') {
-              commentBody = `PR build successfull! https://lucasgrinspan.github.io/github-actions-deploy-test/4`
+              commentBody = `PR build successfull! https://lucasgrinspan.github.io/github-actions-deploy-test/${{steps.pr-number.outputs.num}}`
             }
 
             github.rest.issues.createComment({
