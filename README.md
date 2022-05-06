@@ -26,3 +26,9 @@ This structure is reflected in the GitHub Pages URL.
 - [Deployed output from main](https://lucasgrinspan.github.io/github-actions-deploy-test/)
 - [Deployed output](https://lucasgrinspan.github.io/github-actions-deploy-test/5/) from [PR#5](https://github.com/lucasgrinspan/github-actions-deploy-test/pull/5)
 - [Deployed output](https://lucasgrinspan.github.io/github-actions-deploy-test/6/) from [PR#6](https://github.com/lucasgrinspan/github-actions-deploy-test/pull/6)
+
+## Future Ideas
+
+- Deleting staging links after a period of time once the branch is merged
+- Maybe a site map of all open PRs in the root instead of main? Then main can be on `/main/`
+- Is there a better way to communicate the PR link? The bot comments might pollute a PR's conversation
